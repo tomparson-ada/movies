@@ -36,6 +36,9 @@ export default function Home() {
     // setWatchlist accepts either a new value, or a callback which lets us access the current contents of watchlist
     // You might be tempted to do `setWatchlist([...watchlist, movie])`, but state isn't always update immediately 
     // and `watchlist` could contain an old version. So by using the callback, we ensure that we're using a fresh version of `watchlist`
+    // *You should always use a callback when your new state needs to reference the value of the old state*
+    // https://dev.to/csituma/when-do-you-use-setstate-with-a-callback-1f3g - simple explanation of when to use callbacks with setState
+    // https://www.dhiwise.com/post/guide-to-state-management-with-react-setstate-callback - advanced explanation of when to use callbacks
     setWatchList(oldWatchlist => ([
       // This adds the previous contents of watchlist to our new array
       ...oldWatchlist,
