@@ -36,12 +36,12 @@ export default function Home() {
     // setWatchlist accepts either a new value, or a callback which lets us access the current contents of watchlist
     // You might be tempted to do `setWatchlist([...watchlist, movie])`, but state isn't always update immediately 
     // and `watchlist` could contain an old version. So by using the callback, we ensure that we're using a fresh version of `watchlist`
-    setWatchList(oldWatchlist => [
+    setWatchList(oldWatchlist => ([
       // This adds the previous contents of watchlist to our new array
       ...oldWatchlist,
       // This adds our new movie
       movie
-    ])
+    ]))
   }
 
   return (
