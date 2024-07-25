@@ -1,18 +1,24 @@
 'use client'
 
-import { useEffect } from 'react';
-
-
+import { useState, useEffect } from 'react';
 
 export default function Home() {
 
-  console.group(process.env.TMDB_API_KEY)
-  // useEffect(() => {
-  //   localStorage.setItem('name','tom');
-  // })
-  // return (
-  //   <>
-  //   {localStorage.getItem('name')}
-  //   </>
-  // )
+  let [watchlist,setWatchlist] = useState(() => {
+    return localStorage.getItem('watchlist') ?? [
+        'The Dark Knight',
+        'Barbie',
+        'Toy Story 3'
+    ]
+  })
+
+  useEffect((watchlist) => {
+      localStorage.setItem('watchlist', watchlist)
+  },[watchlist])
+
+  return (
+      <>
+      {watchlist}
+      </>
+  )
 }
