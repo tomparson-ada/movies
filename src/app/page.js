@@ -17,39 +17,39 @@ export default function Home() {
   // any changes are synced across different places the variable is used
   // useState returns 2 things - a variable and a 'setter' function that we use to change the value
   // of the variable later
+  // When we first load the component, we will load the state with the contents of localStorage
   // https://react.dev/reference/react/useState
-  const [watchList,setWatchList] = useState([]);
+  const [watchList,setWatchList] = useState(localStorage.getItem('watchlist') ?? []);
 
   // useEffect is a React hook that lets us specify code that is run immediately after rendering a component
   // (as a 'side effect' of the component being rendered)
-  // this lets us utilise data from the browser using localStorage only after the component has fully loaded
+  // We can restrict how often it is run by passing an array of variables to "watch" in the second parameter
+  // Here, we're watching whenever the `watchlist` changes and then updating the localStorage to match
   // https://react.dev/reference/react/useEffect
   useEffect(() => { 
-    const data = localStorage.getItem('watchList');
-   
-    if (data) {
-      setWatchList(JSON.parse(data));
-    }
-  },[])
+    localStorage.setItem('watchList',JSON.stringify(watchlist))
+  },[watchlist])
 
-  // Here, we specify a function which saves a movie to our watchlist variable, and stores the new value in localStorage
+  // Here, we specify a function which saves a movie to our watchlist variable, and stores the new value in the state
   function saveToWatchList(movie) {
-    // Get the current watchlist from localStorage
-    const data = localStorage.getItem('watchList')
-    // Turn this JSON string into an object (it will be an array) or use an empty array otherwise
-    const parsed = JSON.parse(data) || []
-    // Add our new movie onto the array
-    parsed.push(movie)
-    // Update localStorage with a JSON encoded string of the new, parsed, object
-    localStorage.setItem('watchList',JSON.stringify(parsed))
     // We can now use setWatchList, the 'setter' function given to us by useState, since this is in scope in this component
-    setWatchList(parsed)
+    // setWatchlist accepts either a new value, or a callback which lets us access the current contents of watchlist
+    // You might be tempted to do `setWatchlist([...watchlist, movie])`, but state isn't always update immediately 
+    // and `watchlist` could contain an old version. So by using the callback, we ensure that we're using a fresh version of `watchlist`
+    setWatchList(oldWatchlist => [
+      // This adds the previous contents of watchlist to our new array
+      ...oldWatchlist,
+      // This adds our new movie
+      movie
+    ])
   }
 
   return (
       <>
         {/* Pass saveToWatchList as a prop to FaveMovieAdder */}
         <FaveMovieAdder saveToWatchList={saveToWatchList} />
+        {/* We need to specify a key whenever we're rendering multiple components or HTML elements. */}
+        {/* This lets React track which `li` element maps to which item in the `watchlist` array, so that it can update only the items that have changed */}
         {watchList.length ? <ul>{watchList.map(film => <li key={film}>{film}</li>)}</ul> : <p>No watch lists in local storage</p>}
       </>
   )
