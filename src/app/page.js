@@ -15,7 +15,9 @@ export default function Home() {
   },[])
 
   function saveWatchList() {
-    localStorage.setItem('watchList',JSON.stringify(['Toy Story','Jurassic Park','Forrest Gump']))
+    const faveMovies = ['Toy Story','Jurassic Park','Forrest Gump'];
+    localStorage.setItem('watchList',JSON.stringify(faveMovies));
+    setWatchList(faveMovies);
   }
 
 
