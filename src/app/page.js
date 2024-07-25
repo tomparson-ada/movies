@@ -4,21 +4,25 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
 
-  let [watchlist,setWatchlist] = useState(() => {
-    return localStorage.getItem('watchlist') ?? [
-        'The Dark Knight',
-        'Barbie',
-        'Toy Story 3'
-    ]
-  })
+  const [watchList,setWatchList] = useState([]);
 
-  useEffect((watchlist) => {
-      localStorage.setItem('watchlist', watchlist)
-  },[watchlist])
+  useEffect(() => { 
+    const data = localStorage.getItem('watchList');
+   
+    if (data) {
+      setWatchList(JSON.parse(data));
+    }
+  },[])
+
+  function saveWatchList() {
+    localStorage.setItem('watchList',JSON.stringify(['Toy Story','Jurassic Park','Forrest Gump']))
+  }
+
 
   return (
       <>
-      {watchlist}
+      {watchList.length ? <ul>{watchList.map(film => <li key={film}>{film}</li>)}</ul> : <p>No watch lists in local storage</p>}
+      <button onClick={saveWatchList}>Save watch list!</button>
       </>
   )
 }
