@@ -4,13 +4,12 @@
 
 'use client'
 
-import { useState, useEffect } from 'react';
 import FaveMovieAdder from './components/FaveMovieAdder';
 import useWatchlist from './hooks/useWatchlist';
 
 export default function Home() {
-  const {saveToWatchList, watchlist} = useWatchlist();
-
+  const {saveToWatchList, watchList} = useWatchlist();
+  
   return (
       <>
         {/* Pass saveToWatchList as a prop to FaveMovieAdder */}

@@ -1,13 +1,15 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 
-export function useWatchlist() {
+export default function useWatchlist() {
   // useState is a React hook that lets us keep the value of variables "in state", meaning
   // any changes are synced across different places the variable is used
   // useState returns 2 things - a variable and a 'setter' function that we use to change the value
   // of the variable later
   // When we first load the component, we will load the state with the contents of localStorage
   // https://react.dev/reference/react/useState
-  const [watchList,setWatchList] = useState(localStorage.getItem('watchlist') ?? []);
+  const [watchList,setWatchList] = useState(JSON.parse(localStorage.getItem('watchList')) ?? []);
 
   // useEffect is a React hook that lets us specify code that is run immediately after rendering a component
   // (as a 'side effect' of the component being rendered)
@@ -15,8 +17,8 @@ export function useWatchlist() {
   // Here, we're watching whenever the `watchlist` changes and then updating the localStorage to match
   // https://react.dev/reference/react/useEffect
   useEffect(() => { 
-    localStorage.setItem('watchList',JSON.stringify(watchlist))
-  },[watchlist])
+    localStorage.setItem('watchList',JSON.stringify(watchList))
+  },[watchList])
 
   // Here, we specify a function which saves a movie to our watchlist variable, and stores the new value in the state
   function saveToWatchList(movie) {
@@ -37,6 +39,6 @@ export function useWatchlist() {
 
   return {
     saveToWatchList,
-    watchlist,
+    watchList,
   };
 }
