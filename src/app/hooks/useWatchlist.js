@@ -23,10 +23,14 @@ export default function useWatchlist() {
   // Here, we specify a function which saves a movie to our watchlist variable, and stores the new value in the state
   function saveToWatchList(movie) {
     // We can now use setWatchList, the 'setter' function given to us by useState, since this is in scope in this component
-    // setWatchlist accepts either a new value, or a callback which lets us access the current contents of watchlist
-    // You might be tempted to do `setWatchlist([...watchlist, movie])`, but state isn't always update immediately 
-    // and `watchlist` could contain an old version. So by using the callback, we ensure that we're using a fresh version of `watchlist`
+    // setWatchlist accepts either a new value, or a callback which is passed the current value of watchlist
+    // We can then update this value and set a new value using it
+    // You might be tempted to do `setWatchlist([...watchlist, movie])` (i.e. to not use a callback and just pass a new value to setWatchlist)
+    // but state isn't always update immediately and `watchlist` could contain an old version.
+    // So by using the callback, we ensure that we're using a fresh version of `watchlist`
+    //
     // *You should always use a callback when your new state needs to reference the value of the old state*
+    //
     // https://dev.to/csituma/when-do-you-use-setstate-with-a-callback-1f3g - simple explanation of when to use callbacks with setState
     // https://www.dhiwise.com/post/guide-to-state-management-with-react-setstate-callback - advanced explanation of when to use callbacks
     setWatchList(oldWatchlist => ([
