@@ -1,5 +1,5 @@
-// Our saveToWatchList function is passed to this FaveMovieAdder component from its parent component
-export default function FaveMovieAdder({saveToWatchList}) {
+// Our saveToWatchList function is passed to this MovieAdder component from its parent component
+export default function MovieAdder({saveToWatchList}) {
 
     // Set up a function for us to handle data submitted from our simple form
     function handleSubmit(formData) {
