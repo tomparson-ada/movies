@@ -6,6 +6,7 @@
 
 import FaveMovieAdder from './components/FaveMovieAdder';
 import useWatchlist from './hooks/useWatchlist';
+import Link from 'next/link'
 
 export default function Home() {
   // Include our helper function and the watchList variable from the hook in src/app/hooks
@@ -18,6 +19,7 @@ export default function Home() {
         {/* We need to specify a key whenever we're rendering multiple components or HTML elements. */}
         {/* This lets React track which `li` element maps to which item in the `watchlist` array, so that it can update only the items that have changed */}
         {watchList.length ? <ul>{watchList.map(film => <li key={film}>{film}</li>)}</ul> : <p>No watch lists in local storage</p>}
+        <Link href="/watchlist">View watchlist</Link>
       </>
   )
 }
