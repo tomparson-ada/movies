@@ -1,13 +1,22 @@
 'use client'
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function Movie() {
+function MovieInfo() {
   const searchParams = useSearchParams()
-  
+  return searchParams.get('movie')
+}
+
+export default function Movie() {
   return (
       <>
-        <h2>Viewing Movie: {searchParams.get('movie')}</h2>
+        <h2>
+          Viewing Movie:
+          <Suspense>
+            <MovieInfo />
+          </Suspense>
+        </h2>
       </>
   )
 }

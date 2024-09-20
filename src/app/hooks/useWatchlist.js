@@ -9,7 +9,13 @@ export default function useWatchlist() {
   // of the variable later
   // When we first load the component, we will load the state with the contents of localStorage
   // https://react.dev/reference/react/useState
-  const [watchList,setWatchList] = useState(JSON.parse(localStorage.getItem('watchList')) ?? []);
+  const [watchList,setWatchList] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem('watchList')) ?? []
+    } else {
+    return []
+    }
+  });
 
   // useEffect is a React hook that lets us specify code that is run immediately after rendering a component
   // (as a 'side effect' of the component being rendered)
